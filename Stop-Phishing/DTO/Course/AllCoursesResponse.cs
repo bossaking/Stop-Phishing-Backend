@@ -5,6 +5,6 @@ namespace Stop_Phishing.DTO.Course
 {
     public class AllCoursesResponse
     {
-        public IEnumerable<Models.Course> Courses { get; set; } 
+        public IEnumerable<SimpleCourse> Courses { get; set; } 
     }
 }

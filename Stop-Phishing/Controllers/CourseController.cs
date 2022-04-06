@@ -24,10 +24,7 @@ namespace Stop_Phishing.Controllers
         [HttpGet("courses/")]
         public async Task<IActionResult> GetAllCoursesAsync()
         {
-            return Ok(new AllCoursesResponse()
-            {
-                Courses = await _courseService.GetAllCoursesAsync()
-            });
+            return Ok(await _courseService.GetAllCoursesAsync());
         }
 
         [HttpGet("{id:guid}")]
@@ -43,6 +40,30 @@ namespace Stop_Phishing.Controllers
         public async Task<IActionResult> CreateCourseAsync([FromBody] CreateCourseRequest courseRequest)
         {
             var result = await _courseService.CreateCourseAsync(courseRequest);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+        
+        [HttpPost("update/{id:guid}")]
+        public IActionResult UpdateCourseAsync([FromBody] CreateCourseRequest courseRequest, Guid id)
+        {
+            var result = _courseService.UpdateCourseAsync(courseRequest, id);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+        
+        [HttpDelete("delete/{id:guid}")]
+        public async Task<IActionResult> RemoveCourseAsync(Guid id)
+        {
+            var result = await _courseService.RemoveCourseAsync(id);
             if (result.Status)
             {
                 return Ok(result);

@@ -11,10 +11,12 @@ namespace Stop_Phishing.Models
         { }
         
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
         }
+        
     }
 }

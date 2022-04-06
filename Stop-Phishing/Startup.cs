@@ -46,6 +46,7 @@ namespace Stop_Phishing
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
             services.AddTransient<IGenericRepository<Course>, GenericRepository<Course>>();
+            services.AddTransient<IGenericRepository<Lesson>, GenericRepository<Lesson>>();
             
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICourseService, CourseService>();

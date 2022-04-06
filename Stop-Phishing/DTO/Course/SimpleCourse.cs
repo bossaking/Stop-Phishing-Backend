@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Stop_Phishing.Models;
 
-namespace Stop_Phishing.Models
+namespace Stop_Phishing.DTO.Course
 {
-    public class Course
+    public class SimpleCourse
     {
-        [Key] 
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsComplete { get; set; }
-        public virtual IEnumerable<Lesson> Lessons { get; set; }
+        public virtual IEnumerable<SimpleLesson> Lessons { get; set; }
     }
 }

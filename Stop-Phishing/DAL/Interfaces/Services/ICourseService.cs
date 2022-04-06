@@ -10,8 +10,10 @@ namespace Stop_Phishing.DAL.Interfaces.Services
 {
     public interface ICourseService
     {
-        public Task<IEnumerable<Course>> GetAllCoursesAsync();
+        public Task<AllCoursesResponse> GetAllCoursesAsync();
         public Task<Course> GetCourseByIdAsync(Guid id);
         public Task<ResultMessage> CreateCourseAsync(CreateCourseRequest courseRequest);
+        public ResultMessage UpdateCourseAsync(CreateCourseRequest courseRequest, Guid id);
+        public Task<ResultMessage> RemoveCourseAsync(Guid id);
     }
 }

@@ -6,6 +6,7 @@ namespace Stop_Phishing.DAL.Interfaces
     {
         IGenericRepository<User> UserRepository { get; }
         IGenericRepository<Course> CourseRepository { get; }
+        IGenericRepository<Lesson> LessonRepository { get; }
         void Save();
     }
 }
