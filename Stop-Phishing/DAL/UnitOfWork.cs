@@ -8,11 +8,13 @@ namespace Stop_Phishing.DAL
     {
         private readonly ApplicationDbContext _context;
         public IGenericRepository<User> UserRepository { get; }
+        public IGenericRepository<Course> CourseRepository { get; }
 
-
-        public UnitOfWork(IGenericRepository<User> userRepository, ApplicationDbContext context)
+        public UnitOfWork(IGenericRepository<User> userRepository, IGenericRepository<Course> courseRepository,
+            ApplicationDbContext context)
         {
             this.UserRepository = userRepository;
+            this.CourseRepository = courseRepository;
             this._context = context;
         }
 
@@ -32,6 +34,7 @@ namespace Stop_Phishing.DAL
                     _context.Dispose();
                 }
             }
+
             this._disposed = true;
         }
 
