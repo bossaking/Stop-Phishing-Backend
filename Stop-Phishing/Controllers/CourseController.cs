@@ -30,10 +30,7 @@ namespace Stop_Phishing.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetCourseByIdAsync(Guid id)
         {
-            return Ok(new SingleCourseResponse()
-            {
-                Course = await _courseService.GetCourseByIdAsync(id)
-            });
+            return Ok(await _courseService.GetCourseByIdAsync(id));
         }
 
         [HttpPost("create/")]
@@ -48,10 +45,10 @@ namespace Stop_Phishing.Controllers
             return BadRequest(result);
         }
         
-        [HttpPost("update/{id:guid}")]
-        public IActionResult UpdateCourseAsync([FromBody] CreateCourseRequest courseRequest, Guid id)
+        [HttpPut("update/{id:guid}")]
+        public async Task<IActionResult> UpdateCourseAsync([FromBody] UpdateCourseRequest courseRequest, Guid id)
         {
-            var result = _courseService.UpdateCourseAsync(courseRequest, id);
+            var result = await _courseService.UpdateCourseAsync(courseRequest, id);
             if (result.Status)
             {
                 return Ok(result);

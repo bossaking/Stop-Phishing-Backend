@@ -36,12 +36,27 @@ namespace Stop_Phishing.Services
                         Title = l.Title,
                         Description = l.Description
                     })
-                })
+                }).OrderBy(c => c.Name)
             };
         }
 
-        public async Task<Course> GetCourseByIdAsync(Guid id) =>
-            (await _unitOfWork.CourseRepository.GetById(id));
+        public async Task<SimpleCourse> GetCourseByIdAsync(Guid id)
+        {
+            var course = await _unitOfWork.CourseRepository.GetById(id);
+            return new SimpleCourse()
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Title = course.Title,
+                Description = course.Description,
+                Lessons = course.Lessons.Select(l => new SimpleLesson()
+                {
+                    Id = l.Id,
+                    Title = l.Title,
+                    Description = l.Description
+                })
+            };
+        }
 
         public async Task<ResultMessage> CreateCourseAsync(CreateCourseRequest courseRequest)
         {
@@ -70,7 +85,7 @@ namespace Stop_Phishing.Services
             return new ResultMessage() {Status = true, Message = "Lekcja została utworzona pomyślnie"};
         }
 
-        public ResultMessage UpdateCourseAsync(CreateCourseRequest courseRequest, Guid id)
+        public async Task<ResultMessage> UpdateCourseAsync(UpdateCourseRequest courseRequest, Guid id)
         {
             var course = new Course()
             {
@@ -78,16 +93,29 @@ namespace Stop_Phishing.Services
                 Title = courseRequest.Title,
                 Name = courseRequest.Name,
                 Description = courseRequest.Description,
-                Lessons = courseRequest.Lessons.Select(l => new Lesson()
-                {
-                    Id = l.Id,
-                    Title = l.Title,
-                    Description = l.Description,
-                    CourseId = id
-                })
             };
-
             _unitOfWork.CourseRepository.Update(course);
+
+            
+            foreach (var lesson in courseRequest.UpdatedLessons)
+            {
+                var newLesson = new Lesson()
+                {
+                    Id = lesson.Id,
+                    Title = lesson.Title,
+                    Description = lesson.Description,
+                    Course = course,
+                    CourseId = id
+                };
+                _unitOfWork.LessonRepository.Update(newLesson);
+            }
+
+            foreach(var lessonId in courseRequest.DeletedLessonsIds)
+            {
+                await _unitOfWork.LessonRepository.Delete(lessonId);
+            }
+            
+            
             _unitOfWork.Save();
             return new ResultMessage() {Status = true, Message = "Zmiany zostały zapisane"};
         }
