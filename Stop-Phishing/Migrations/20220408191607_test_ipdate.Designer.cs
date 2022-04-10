@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Stop_Phishing.Models;
@@ -9,9 +10,10 @@ using Stop_Phishing.Models;
 namespace Stop_Phishing.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220408191607_test_ipdate")]
+    partial class test_ipdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,7 +234,7 @@ namespace Stop_Phishing.Migrations
                     b.Property<string>("RightAnswerCommunicate")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TestId")
+                    b.Property<Guid?>("TestId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Title")
@@ -402,13 +404,9 @@ namespace Stop_Phishing.Migrations
 
             modelBuilder.Entity("Stop_Phishing.Models.Question", b =>
                 {
-                    b.HasOne("Stop_Phishing.Models.Test", "Test")
+                    b.HasOne("Stop_Phishing.Models.Test", null)
                         .WithMany("Questions")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Test");
+                        .HasForeignKey("TestId");
                 });
 
             modelBuilder.Entity("Stop_Phishing.Models.Test", b =>

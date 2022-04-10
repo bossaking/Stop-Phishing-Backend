@@ -10,13 +10,20 @@ namespace Stop_Phishing.DAL
         public IGenericRepository<User> UserRepository { get; }
         public IGenericRepository<Course> CourseRepository { get; }
         public IGenericRepository<Lesson> LessonRepository { get; }
+        public IGenericRepository<Test> TestRepository { get; }
+        public IGenericRepository<Question> QuestionRepository { get; }
+        public IGenericRepository<Answer> AnswerRepository { get; }
 
         public UnitOfWork(IGenericRepository<User> userRepository, IGenericRepository<Course> courseRepository, IGenericRepository<Lesson> lessonRepository,
+            IGenericRepository<Test> testRepository, IGenericRepository<Question> questionRepository, IGenericRepository<Answer> answerRepository,
             ApplicationDbContext context)
         {
             this.UserRepository = userRepository;
             this.CourseRepository = courseRepository;
             this.LessonRepository = lessonRepository;
+            this.TestRepository = testRepository;
+            this.QuestionRepository = questionRepository;
+            this.AnswerRepository = answerRepository;
             this._context = context;
         }
 

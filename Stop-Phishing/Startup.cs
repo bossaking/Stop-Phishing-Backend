@@ -1,17 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -47,9 +50,13 @@ namespace Stop_Phishing
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
             services.AddTransient<IGenericRepository<Course>, GenericRepository<Course>>();
             services.AddTransient<IGenericRepository<Lesson>, GenericRepository<Lesson>>();
+            services.AddTransient<IGenericRepository<Test>, GenericRepository<Test>>();
+            services.AddTransient<IGenericRepository<Question>, GenericRepository<Question>>();
+            services.AddTransient<IGenericRepository<Answer>, GenericRepository<Answer>>();
             
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<ITestService, TestService>();
 
             services.AddAuthentication(options =>
                 {
@@ -101,7 +108,12 @@ namespace Stop_Phishing
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
+            // app.UseStaticFiles(new StaticFileOptions()
+            // {
+            //     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+            //     RequestPath = new PathString("/StaticFiles")
+            // });
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthentication();

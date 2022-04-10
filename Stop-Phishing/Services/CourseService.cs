@@ -114,6 +114,17 @@ namespace Stop_Phishing.Services
             {
                 await _unitOfWork.LessonRepository.Delete(lessonId);
             }
+
+            foreach (var lesson in courseRequest.CreatedLessons)
+            {
+                var les = new Lesson()
+                {
+                    Title = lesson.Title,
+                    Description = lesson.Description,
+                    Course = course
+                };
+                await _unitOfWork.LessonRepository.Insert(les);
+            }
             
             
             _unitOfWork.Save();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Stop_Phishing.Models;
@@ -9,9 +10,10 @@ using Stop_Phishing.Models;
 namespace Stop_Phishing.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220408190344_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,15 +234,10 @@ namespace Stop_Phishing.Migrations
                     b.Property<string>("RightAnswerCommunicate")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TestId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TestId");
 
                     b.ToTable("Questions");
                 });
@@ -400,17 +397,6 @@ namespace Stop_Phishing.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("Stop_Phishing.Models.Question", b =>
-                {
-                    b.HasOne("Stop_Phishing.Models.Test", "Test")
-                        .WithMany("Questions")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Test");
-                });
-
             modelBuilder.Entity("Stop_Phishing.Models.Test", b =>
                 {
                     b.HasOne("Stop_Phishing.Models.Course", "Course")
@@ -432,11 +418,6 @@ namespace Stop_Phishing.Migrations
             modelBuilder.Entity("Stop_Phishing.Models.Question", b =>
                 {
                     b.Navigation("Answers");
-                });
-
-            modelBuilder.Entity("Stop_Phishing.Models.Test", b =>
-                {
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }
