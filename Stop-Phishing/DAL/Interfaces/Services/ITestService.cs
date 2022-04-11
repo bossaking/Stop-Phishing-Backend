@@ -12,6 +12,8 @@ namespace Stop_Phishing.DAL.Interfaces.Services
     public interface ITestService
     {
         public Task<TestResponse> GetTestByCourseIdAsync(Guid id);
+        public Task<TestResponse> GetTestByIdAsync(Guid id);
         public Task<ResultMessage> CreateTestAsync(CreateTestRequest testRequest, Guid courseId);
+        public Task<ResultMessage> RemoveTestAsync(Guid id);
     }
 }

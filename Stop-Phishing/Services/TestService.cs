@@ -46,6 +46,29 @@ namespace Stop_Phishing.Services
                 })
             };
         }
+        
+        public async Task<TestResponse> GetTestByIdAsync(Guid id)
+        {
+            var test = (await _unitOfWork.TestRepository.GetWhere(t => t.Id.Equals(id))).First();
+            return new TestResponse()
+            {
+                Id = test.Id,
+                Questions = test.Questions.Select(q => new SimpleQuestion()
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    RightAnswerCommunicate = q.RightAnswerCommunicate,
+                    BadAnswerCommunicate = q.BadAnswerCommunicate,
+                    Image = q.Image,
+                    Answers = q.Answers.Select(a => new SimpleAnswer()
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        IsRight = a.IsRight
+                    })
+                })
+            };
+        }
 
         private async Task<string> SaveImage(IFormFile file)
         {
@@ -55,7 +78,7 @@ namespace Stop_Phishing.Services
 
             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value;
             var fullPath = Path.Combine(pathToSave, fileName);
-            imagePath = Path.Combine(folderName, fileName);
+            imagePath = Path.Combine("Images", fileName);
 
             await using var stream = new FileStream(fullPath, FileMode.Create);
             await file.CopyToAsync(stream);
@@ -112,6 +135,13 @@ namespace Stop_Phishing.Services
             _unitOfWork.Save();
 
             return new ResultMessage() {Status = true, Message = "Test został utworzony pomyślnie"};
+        }
+        
+        public async Task<ResultMessage> RemoveTestAsync(Guid id)
+        {
+            await _unitOfWork.TestRepository.Delete(id);
+            _unitOfWork.Save();
+            return new ResultMessage() {Status = true, Message = "Test został usunięty pomyślnie"};
         }
     }
 }

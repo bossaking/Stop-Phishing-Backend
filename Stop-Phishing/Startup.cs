@@ -108,12 +108,12 @@ namespace Stop_Phishing
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            // app.UseStaticFiles(new StaticFileOptions()
-            // {
-            //     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
-            //     RequestPath = new PathString("/StaticFiles")
-            // });
+           // app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources/Images")),
+                RequestPath = new PathString("/Images")
+            });
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthentication();

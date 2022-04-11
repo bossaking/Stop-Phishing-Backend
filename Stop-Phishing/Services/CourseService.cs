@@ -30,6 +30,7 @@ namespace Stop_Phishing.Services
                     Name = c.Name,
                     Title = c.Title,
                     Description = c.Description,
+                    TestId = c.Test?.Id ?? Guid.Empty,
                     Lessons = c.Lessons.Select(l => new SimpleLesson()
                     {
                         Id = l.Id,
@@ -49,6 +50,7 @@ namespace Stop_Phishing.Services
                 Name = course.Name,
                 Title = course.Title,
                 Description = course.Description,
+                TestId = course.Test?.Id ?? Guid.Empty,
                 Lessons = course.Lessons.Select(l => new SimpleLesson()
                 {
                     Id = l.Id,

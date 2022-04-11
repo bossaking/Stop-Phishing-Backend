@@ -11,6 +11,7 @@ namespace Stop_Phishing.DTO.Course
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsComplete { get; set; }
+        public Guid TestId { get; set; }
         public virtual IEnumerable<SimpleLesson> Lessons { get; set; }
     }
 }

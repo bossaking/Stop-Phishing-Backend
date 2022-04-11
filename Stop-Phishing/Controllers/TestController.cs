@@ -33,6 +33,13 @@ namespace Stop_Phishing.Controllers
         {
             return Ok(await _testService.GetTestByCourseIdAsync(id));
         }
+        
+        [HttpGet("test/{id:guid}")]
+        public async Task<IActionResult> GetTestByIdAsync(Guid id)
+        {
+            return Ok(await _testService.GetTestByIdAsync(id));
+        }
+
 
         [HttpPost("create/{id:guid}")]
         public async Task<IActionResult> CreateTestAsync([FromForm] CreateTestRequest testRequest, Guid id)
@@ -58,16 +65,16 @@ namespace Stop_Phishing.Controllers
         //     return BadRequest(result);
         // }
         //
-        // [HttpDelete("delete/{id:guid}")]
-        // public async Task<IActionResult> RemoveCourseAsync(Guid id)
-        // {
-        //     var result = await _courseService.RemoveCourseAsync(id);
-        //     if (result.Status)
-        //     {
-        //         return Ok(result);
-        //     }
-        //
-        //     return BadRequest(result);
-        // }
+        [HttpDelete("delete/{id:guid}")]
+        public async Task<IActionResult> RemoveTestAsync(Guid id)
+        {
+            var result = await _testService.RemoveTestAsync(id);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+        
+            return BadRequest(result);
+        }
     }
 }
