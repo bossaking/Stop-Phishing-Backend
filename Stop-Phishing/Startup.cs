@@ -107,7 +107,7 @@ namespace Stop_Phishing
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Stop_Phishing v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
            // app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {

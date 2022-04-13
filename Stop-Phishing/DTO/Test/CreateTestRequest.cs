@@ -7,7 +7,7 @@ namespace Stop_Phishing.DTO.Test
 {
     public class CreateTestRequest
     {
-        public IFormFile[] Image { get; set; }
+        public ICollection<IFormFile> Images { get; set; }
         public ICollection<CreateQuestionRequest> Questions { get; set; }
     }
 }

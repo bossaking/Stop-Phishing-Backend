@@ -4,6 +4,7 @@ namespace Stop_Phishing.DAL.Interfaces
 {
     public interface IUnitOfWork
     {
+        public ApplicationDbContext Context { get; }
         IGenericRepository<User> UserRepository { get; }
         IGenericRepository<Course> CourseRepository { get; }
         IGenericRepository<Lesson> LessonRepository { get; }

@@ -52,19 +52,19 @@ namespace Stop_Phishing.Controllers
         
             return BadRequest(result);
         }
-        //
-        // [HttpPut("update/{id:guid}")]
-        // public async Task<IActionResult> UpdateCourseAsync([FromBody] UpdateCourseRequest courseRequest, Guid id)
-        // {
-        //     var result = await _courseService.UpdateCourseAsync(courseRequest, id);
-        //     if (result.Status)
-        //     {
-        //         return Ok(result);
-        //     }
-        //
-        //     return BadRequest(result);
-        // }
-        //
+        
+        [HttpPut("update/{id:guid}")]
+        public async Task<IActionResult> UpdateTestAsync([FromForm] UpdateTestRequest testRequest, Guid id)
+        {
+            var result = await _testService.UpdateTestAsync(testRequest, id);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+        
+            return BadRequest(result);
+        }
+        
         [HttpDelete("delete/{id:guid}")]
         public async Task<IActionResult> RemoveTestAsync(Guid id)
         {

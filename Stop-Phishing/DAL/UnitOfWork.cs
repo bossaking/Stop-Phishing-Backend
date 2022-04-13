@@ -6,7 +6,7 @@ namespace Stop_Phishing.DAL
 {
     public sealed class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly ApplicationDbContext _context;
+        public ApplicationDbContext Context { get; }
         public IGenericRepository<User> UserRepository { get; }
         public IGenericRepository<Course> CourseRepository { get; }
         public IGenericRepository<Lesson> LessonRepository { get; }
@@ -24,12 +24,12 @@ namespace Stop_Phishing.DAL
             this.TestRepository = testRepository;
             this.QuestionRepository = questionRepository;
             this.AnswerRepository = answerRepository;
-            this._context = context;
+            this.Context = context;
         }
 
         public void Save()
         {
-            _context.SaveChanges();
+            Context.SaveChanges();
         }
 
         private bool _disposed = false;
@@ -40,7 +40,7 @@ namespace Stop_Phishing.DAL
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    Context.Dispose();
                 }
             }
 
